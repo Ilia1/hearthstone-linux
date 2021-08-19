@@ -47,8 +47,9 @@ jobs:
     - name: Download 
       run: |
          python3 keg/bin/ngdp fetch hsb --tags OSX  --tags Production
-         python3 keg/bin/ngdp install hsb ${{ env.RELEASE_VERSION }} --tags OSX  --tags Production /tmp/out
-         tar -czf HS-${{ env.RELEASE_VERSION }}.tar.gz /tmp/out/*
+         mkdir out
+         python3 keg/bin/ngdp install hsb ${{ env.RELEASE_VERSION }} --tags OSX  --tags Production out
+         tar -czf HS-${{ env.RELEASE_VERSION }}.tar.gz out/*
          
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
