@@ -25,9 +25,14 @@ jobs:
     - name: install depend
       run: |
          pip3 install click humanize tabulate tqdm parsimonious requests Crypto  pycryptodome bitarray toml
-    - name: Check version
+    - name: Fetch metadata
       run: |
         python3 keg/bin/ngdp init
         python3 keg/bin/ngdp remote add hsb
         python3 keg/bin/ngdp fetch hsb --metadata-only
-        echo "::set-output name=TAG_NAME::$(python3 keg/bin/ngdp inspect hsb | awk {'print $4'} | awk 'length($0)==5' | tail -n 1)"
+    - name: Retrieve version
+      run: |
+          echo "::set-output name=TAG_NAME::$(python3 keg/bin/ngdp inspect hsb | awk {'print $4'} | awk 'length($0)==5' | tail -n 1)"
+      id: version
+
+
