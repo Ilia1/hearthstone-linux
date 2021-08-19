@@ -1,0 +1,28 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python application
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Check version
+      run: |
+        python3 ./keg/bin/ngdp init
+        python3 ./keg/bin/ngdp remote add hsb
+        python3 ./keg/bin/ngdp fetch hsb --metadata-only
+        echo "::set-output name=TAG_NAME::$(python3 ./keg/bin/ngdp inspect hsb | awk {'print $4'} | awk 'length($0)==5' | tail -n 1)"
