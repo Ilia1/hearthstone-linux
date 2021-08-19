@@ -22,15 +22,18 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.9
+        
     - name: install depend
       run: |
          pip3 install click humanize tabulate tqdm parsimonious requests Crypto  pycryptodome bitarray toml
+         
     - name: Fetch metadata
       run: |
         python3 keg/bin/ngdp init
         python3 keg/bin/ngdp remote add hsb
         python3 keg/bin/ngdp fetch hsb --metadata-only
         echo "RELEASE_VERSION=$(python3 keg/bin/ngdp inspect hsb | awk {'print $6'} | awk 'length($0)>10' | tail -n 1)"  >> $GITHUB_ENV
+        
     - name: Set version
       uses: thomaseizinger/create-release@1.0.0
       env:
@@ -39,22 +42,14 @@ jobs:
         tag_name: ${{ env.RELEASE_VERSION }}
         name: ${{ env.RELEASE_VERSION }}
         draft: false
-        prerelease: false
-    - name: Caching
-      uses: actions/cache@v2
-      env:
-          cache-name: cache-python
-      with:
-        path: |
-           .ngdp/
-           .local/lib/python3.9
-           .cache/pip
-           
+        prerelease: false   
+        
     - name: Download 
       run: |
          python3 keg/bin/ngdp fetch hsb --tags OSX  --tags Production
          python3 keg/bin/ngdp install hsb ${{ env.RELEASE_VERSION }} --tags OSX  --tags Production /tmp/out
          tar -czf HS-${{ env.RELEASE_VERSION }}.tar.gz /tmp/out/*
+         
     - name: Upload binaries to release
       uses: svenstaro/upload-release-action@v2
       with:
