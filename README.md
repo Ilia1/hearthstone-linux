@@ -1,5 +1,7 @@
 # hearthstone-linux
 
+[![Hearthstone](https://img.shields.io/github/release/Ilia1/hearthstone-linux/all.svg)](https://github.com/Ilia1/hearthstone-linux/releases/latest)
+
 Craft your own linux native Hearthstone client
 
 *Tested with client version 18.6.0.63543*
