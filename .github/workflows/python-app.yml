@@ -24,7 +24,7 @@ jobs:
         python-version: 3.9
     - name: install depend
       run: |
-         pip3 install click humanize tabulate tqdm parsimonious requests Crypto pycrypto pycryptodome bitarray
+         pip3 install click humanize tabulate tqdm parsimonious requests Crypto  pycryptodome bitarray
     - name: Check version
       run: |
         python3 keg/bin/ngdp init
