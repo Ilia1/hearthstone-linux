@@ -24,7 +24,7 @@ jobs:
         python-version: 3.9
     - name: Check version
       run: |
-        pip3 install click humanize tabulate tqdm parsimonious
+        pip3 install click humanize tabulate tqdm parsimonious requests
         python3 keg/bin/ngdp init
         python3 keg/bin/ngdp remote add hsb
         python3 keg/bin/ngdp fetch hsb --metadata-only
