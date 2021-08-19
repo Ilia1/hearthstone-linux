@@ -30,9 +30,13 @@ jobs:
         python3 keg/bin/ngdp init
         python3 keg/bin/ngdp remote add hsb
         python3 keg/bin/ngdp fetch hsb --metadata-only
-    - name: Retrieve version
-      run: |
-          echo "::set-output name=TAG_NAME::$(python3 keg/bin/ngdp inspect hsb | awk {'print $4'} | awk 'length($0)==5' | tail -n 1)"
-      id: version
-
-
+        echo "RELEASE_VERSION=$(python3 keg/bin/ngdp inspect hsb | awk {'print $4'} | awk 'length($0)==5' | tail -n 1)"  >> $GITHUB_ENV
+    - name: Set version
+      uses: thomaseizinger/create-release@1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.RELEASE_VERSION }}
+          name: ${{ env.RELEASE_VERSION }}
+          draft: false
+          prerelease: false
