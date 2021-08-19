@@ -30,7 +30,7 @@ jobs:
         python3 keg/bin/ngdp init
         python3 keg/bin/ngdp remote add hsb
         python3 keg/bin/ngdp fetch hsb --metadata-only
-        echo "RELEASE_VERSION=$(python3 keg/bin/ngdp inspect hsb | awk {'print $6'} | awk 'length($0)==5' | tail -n 1)"  >> $GITHUB_ENV
+        echo "RELEASE_VERSION=$(python3 keg/bin/ngdp inspect hsb | awk {'print $6'} | awk 'length($0)>10' | tail -n 1)"  >> $GITHUB_ENV
     - name: Set version
       uses: thomaseizinger/create-release@1.0.0
       env:
