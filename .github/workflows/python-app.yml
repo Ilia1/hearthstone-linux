@@ -22,7 +22,7 @@ jobs:
         python-version: 3.9
     - name: Check version
       run: |
-        python3 ./keg/bin/ngdp init
-        python3 ./keg/bin/ngdp remote add hsb
-        python3 ./keg/bin/ngdp fetch hsb --metadata-only
+        python3 keg/bin/ngdp init
+        python3 keg/bin/ngdp remote add hsb
+        python3 keg/bin/ngdp fetch hsb --metadata-only
         echo "::set-output name=TAG_NAME::$(python3 ./keg/bin/ngdp inspect hsb | awk {'print $4'} | awk 'length($0)==5' | tail -n 1)"
